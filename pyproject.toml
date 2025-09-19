@@ -1,0 +1,99 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pr-collector"
+dynamic = ["version"]
+description = "Collect PR diffs and metadata into markdown files"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.12"
+authors = [
+    { name = "Your Name", email = "your.email@example.com" },
+]
+keywords = []
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "typer>=0.12.0",
+    "rich>=13.0.0",
+    "gitpython>=3.1.0",
+    "pygithub>=2.1.0",
+    "pyyaml>=6.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-cov>=4.0.0",
+    "ruff>=0.4.0",
+    "black>=24.0.0",
+    "pyright>=1.1.300",
+    "pre-commit>=3.6.0",
+    "sphinx>=7.0.0",
+    "sphinx-rtd-theme>=2.0.0",]
+[project.scripts]
+pr-collector = "pr_collector.cli:main"
+[project.urls]
+Homepage = "https://github.com/yourusername/pr-collector"
+Repository = "https://github.com/yourusername/pr-collector"
+Issues = "https://github.com/yourusername/pr-collector/issues"
+
+[tool.hatch.version]
+path = "src/pr_collector/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pr_collector"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP"]
+ignore = ["E501"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["pr_collector"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S101"]
+
+[tool.black]
+line-length = 100
+target-version = ['py312']
+
+[tool.pyright]
+pythonVersion = "3.12"
+typeCheckingMode = "standard"
+# Fast and accurate type checking
+useLibraryCodeForTypes = true
+# Exclude tests by default for faster checking
+exclude = [
+    "tests/",
+    ".venv/",
+    "build/",
+    "dist/",
+]
+# Report settings
+reportMissingImports = true
+reportMissingTypeStubs = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+addopts = "-v --cov=pr_collector --cov-report=term-missing"
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+]
