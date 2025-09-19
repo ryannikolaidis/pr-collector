@@ -146,6 +146,7 @@ def get_current_pr_number(repo_path: str, token: str | None = None) -> int:
 
     owner = None
     repo_name = None
+    current_branch = None
     try:
         repo = git.Repo(repo_path)
         current_branch = repo.active_branch.name
