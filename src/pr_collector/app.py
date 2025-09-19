@@ -144,6 +144,8 @@ def generate_markdown(
 def get_current_pr_number(repo_path: str, token: str | None = None) -> int:
     """Get the PR number for the current branch."""
 
+    owner = None
+    repo_name = None
     try:
         repo = git.Repo(repo_path)
         current_branch = repo.active_branch.name
